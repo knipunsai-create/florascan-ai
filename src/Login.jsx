@@ -1,7 +1,6 @@
+```jsx
 import { useState } from 'react'
-import {
-  sendEmailVerification,
-} from 'firebase/auth'
+import { sendEmailVerification } from 'firebase/auth'
 import {
   auth,
   googleProvider,
@@ -68,17 +67,21 @@ export default function Login() {
       }
     } catch (err) {
       setError(
-        err.code === 'auth/email-already-in-use'
-          ? 'This email already has an account. Please sign in.'
-          : err.code === 'auth/invalid-credential'
-            ? 'Email or password is incorrect.'
-            : err.code === 'auth/weak-password'
-              ? 'Your password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.'
-              : err.code === 'auth/invalid-email'
-                ? 'Please enter a valid email address.'
-                : err.code === 'auth/too-many-requests'
-                  ? 'Too many attempts. Please wait and try again later.'
-                  : 'Authentication failed. Please try again.'
+        err.code === 'auth/user-not-found'
+          ? 'Email does not exist. Please create an account.'
+          : err.code === 'auth/email-already-in-use'
+            ? 'This email already has an account. Please sign in.'
+            : err.code === 'auth/invalid-credential'
+              ? 'Email or password is incorrect. Please check your details.'
+              : err.code === 'auth/wrong-password'
+                ? 'Incorrect password. Please try again.'
+                : err.code === 'auth/weak-password'
+                  ? 'Your password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.'
+                  : err.code === 'auth/invalid-email'
+                    ? 'Please enter a valid email address.'
+                    : err.code === 'auth/too-many-requests'
+                      ? 'Too many attempts. Please wait and try again later.'
+                      : 'Authentication failed. Please try again.'
       )
     } finally {
       setLoading(false)
@@ -294,3 +297,4 @@ export default function Login() {
     </main>
   )
 }
+```
